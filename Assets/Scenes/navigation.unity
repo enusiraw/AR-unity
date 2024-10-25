@@ -394,6 +394,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointID: 
   pointDescription: 
+  connectedPoints:
+  - {fileID: 1579510077}
+  - {fileID: 1189862203}
+  - {fileID: 614660345}
+  - {fileID: 662168613}
 --- !u!1 &192950906
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,6 +798,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointID: 
   pointDescription: 
+  connectedPoints:
+  - {fileID: 662168613}
 --- !u!1001 &390218573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1190,6 +1197,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointID: 
   pointDescription: 
+  connectedPoints:
+  - {fileID: 389550626}
+  - {fileID: 662168613}
+  - {fileID: 165403087}
 --- !u!1 &627267679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,6 +1294,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointID: 
   pointDescription: 
+  connectedPoints:
+  - {fileID: 165403087}
+  - {fileID: 389550626}
 --- !u!1 &754213854
 GameObject:
   m_ObjectHideFlags: 0
@@ -2061,6 +2075,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointID: 
   pointDescription: 
+  connectedPoints:
+  - {fileID: 165403087}
+  - {fileID: 1579510077}
+  - {fileID: 389550626}
 --- !u!1 &1368911948
 GameObject:
   m_ObjectHideFlags: 0
@@ -2180,7 +2198,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7476f79925d2c4b48a46cbe11e64c65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allKeyPoints: []
+  allKeyPoints:
+  - {fileID: 165403087}
+  - {fileID: 1579510077}
+  - {fileID: 614660345}
+  - {fileID: 389550626}
+  - {fileID: 662168613}
+  - {fileID: 1189862203}
 --- !u!4 &1413437313
 Transform:
   m_ObjectHideFlags: 0
@@ -2459,6 +2483,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointID: 
   pointDescription: 
+  connectedPoints:
+  - {fileID: 165403087}
+  - {fileID: 1189862203}
+  - {fileID: 614660345}
 --- !u!1 &1783395551
 GameObject:
   m_ObjectHideFlags: 0
@@ -2908,7 +2936,6 @@ MonoBehaviour:
   userPosition: {fileID: 1096234872}
   arrowPrefab: {fileID: 1041224055}
   arrivalThreshold: 4
-  proximityThreshold: 20
 --- !u!1 &2067863842
 GameObject:
   m_ObjectHideFlags: 0
