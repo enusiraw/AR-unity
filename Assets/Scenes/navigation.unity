@@ -156,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Camera: {fileID: 1096234878}
   m_OriginBaseGameObject: {fileID: 17141481}
-  m_CameraFloorOffsetObject: {fileID: 1448297828}
+  m_CameraFloorOffsetObject: {fileID: 1096234871}
   m_RequestedTrackingOriginMode: 0
   m_CameraYOffset: 1.1176
 --- !u!4 &17141483
@@ -168,7 +168,7 @@ Transform:
   m_GameObject: {fileID: 17141481}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -613,11 +613,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!4 &303571604 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5e10893f74ec1c1418d2aca2aee034db, type: 3}
-  m_PrefabInstance: {fileID: 1041224054}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &364551753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1328,7 +1323,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 390218574}
-  - {fileID: 303571604}
   m_Father: {fileID: 1448297829}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &754213856
@@ -1644,7 +1638,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 754213855}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 5e10893f74ec1c1418d2aca2aee034db, type: 3}
       propertyPath: m_LocalScale.x
@@ -1754,7 +1748,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1083788569
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1829,6 +1823,7 @@ GameObject:
   - component: {fileID: 1096234875}
   - component: {fileID: 1096234874}
   - component: {fileID: 1096234873}
+  - component: {fileID: 1096234879}
   m_Layer: 0
   m_Name: AR Camera
   m_TagString: MainCamera
@@ -2029,6 +2024,18 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1096234879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096234871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e3c44306fb1e439a9f18b2212b8ab70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1189862201
 GameObject:
   m_ObjectHideFlags: 0
@@ -2887,7 +2894,7 @@ MonoBehaviour:
   destinationDropdown: {fileID: 2067863844}
   startButton: {fileID: 80180701}
   feedbackText: {fileID: 1783395553}
-  feedbackPanel: {fileID: 1783395551}
+  feedbackPanel: {fileID: 1083788568}
   navigationSystem: {fileID: 2064811897}
 --- !u!1 &2064811894
 GameObject:
@@ -2899,6 +2906,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2064811896}
   - component: {fileID: 2064811897}
+  - component: {fileID: 2064811898}
   m_Layer: 0
   m_Name: NavigationManager
   m_TagString: Untagged
@@ -2934,8 +2942,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userPosition: {fileID: 1096234872}
+  targetKeyPoint: {fileID: 0}
+--- !u!114 &2064811898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064811894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8747b72b5eb8de4c9f2cb73d7846b39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 1041224055}
-  arrivalThreshold: 4
+  userPosition: {fileID: 1096234872}
+  arrivalThreshold: 1
 --- !u!1 &2067863842
 GameObject:
   m_ObjectHideFlags: 0
@@ -3189,6 +3211,7 @@ SceneRoots:
   - {fileID: 627267681}
   - {fileID: 17141483}
   - {fileID: 1448297829}
+  - {fileID: 1041224054}
   - {fileID: 2064811896}
   - {fileID: 420978822}
   - {fileID: 192950910}

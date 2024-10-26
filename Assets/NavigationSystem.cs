@@ -1,38 +1,39 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Collections;
 
 public class NavigationSystem : MonoBehaviour
 {
     public Transform userPosition;
-    public GameObject arrowPrefab;
-    private GameObject arrowInstance;
-    private KeyPoint targetKeyPoint;
-    public float arrivalThreshold = 1.0f;
+    public KeyPoint targetKeyPoint;
+    private TurnByTurnNavigation turnByTurnNavigation;
     private KeyPoint[] keyPoints;
 
     void Start()
     {
         userPosition = userPosition ?? GameObject.FindWithTag("MainCamera")?.transform;
-
         keyPoints = FindObjectsOfType<KeyPoint>();
-        if (keyPoints.Length == 0) Debug.LogError("No keypoints found in the scene.");
 
-        arrowInstance = Instantiate(arrowPrefab);
-        arrowInstance.SetActive(false);
+        if (keyPoints.Length == 0) Debug.LogError("No keypoints found in the scene.");
+        
+        turnByTurnNavigation = GetComponent<TurnByTurnNavigation>();
+        if (turnByTurnNavigation == null)
+        {
+            Debug.LogError("TurnByTurnNavigation component is missing.");
+        }
     }
 
     public void StartNavigation(KeyPoint destination)
     {
         targetKeyPoint = destination;
         List<KeyPoint> path = FindPath(GetCurrentKeyPoint(), destination);
+        
         if (path == null || path.Count == 0)
         {
             Debug.LogError("Failed to find a valid path.");
             return;
         }
 
-        StartCoroutine(DisplayTurnByTurnNavigation(path));
+        StartCoroutine(turnByTurnNavigation.NavigatePath(path));
     }
 
     List<KeyPoint> FindPath(KeyPoint start, KeyPoint goal)
@@ -83,22 +84,6 @@ public class NavigationSystem : MonoBehaviour
         return path;
     }
 
-    IEnumerator DisplayTurnByTurnNavigation(List<KeyPoint> path)
-    {
-        foreach (var waypoint in path)
-        {
-            arrowInstance.SetActive(true);
-            PointArrowAt(waypoint.transform.position);
-            while (Vector3.Distance(userPosition.position, waypoint.transform.position) > arrivalThreshold)
-            {
-                yield return null;
-            }
-            yield return new WaitForSeconds(0.5f);
-        }
-        arrowInstance.SetActive(false);
-        Debug.Log("Destination reached!");
-    }
-
     KeyPoint GetCurrentKeyPoint()
     {
         KeyPoint nearestKeyPoint = null;
@@ -115,13 +100,5 @@ public class NavigationSystem : MonoBehaviour
         }
 
         return nearestKeyPoint;
-    }
-
-    void PointArrowAt(Vector3 targetPosition)
-    {
-        Vector3 direction = targetPosition - userPosition.position;
-        Quaternion rotation = Quaternion.LookRotation(direction);
-        arrowInstance.transform.position = userPosition.position + direction.normalized * 0.5f;
-        arrowInstance.transform.rotation = rotation;
     }
 }

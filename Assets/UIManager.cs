@@ -13,12 +13,19 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
+        // Ensure feedbackPanel is hidden at the start
+        if (feedbackPanel != null)
+        {
+            feedbackPanel.SetActive(false);  // Ensure it's deactivated at the beginning
+        }
+
         keyPoints = FindObjectsOfType<KeyPoint>();
         PopulateDropdown();
-        HideFeedbackAlert();
+        
         startButton.onClick.AddListener(OnStartNavigation);
-
         destinationDropdown.onValueChanged.AddListener(OnDestinationSelected);
+
+        HideFeedbackAlert(); 
     }
 
     void PopulateDropdown()
@@ -30,7 +37,6 @@ public class UIManager : MonoBehaviour
         }
         destinationDropdown.RefreshShownValue(); 
     }
-
 
     public void OnDestinationSelected(int index)
     {
@@ -60,6 +66,7 @@ public class UIManager : MonoBehaviour
         }
 
         startButton.gameObject.SetActive(false); 
+        HideFeedbackAlert();
     }
 
     public void ShowFeedbackAlert(string message)
