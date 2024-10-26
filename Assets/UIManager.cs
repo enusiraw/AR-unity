@@ -7,25 +7,25 @@ public class UIManager : MonoBehaviour
     public TMP_Dropdown destinationDropdown;
     public Button startButton;
     public TMP_Text feedbackText;
-    public GameObject feedbackPanel;  
+    public GameObject feedbackPanel;
     public NavigationSystem navigationSystem;
     private KeyPoint[] keyPoints;
+    public ArrowController arrowController;  // Reference to the ArrowController
 
     void Start()
     {
-        // Ensure feedbackPanel is hidden at the start
         if (feedbackPanel != null)
         {
-            feedbackPanel.SetActive(false);  // Ensure it's deactivated at the beginning
+            feedbackPanel.SetActive(false);
         }
 
         keyPoints = FindObjectsOfType<KeyPoint>();
         PopulateDropdown();
-        
+
         startButton.onClick.AddListener(OnStartNavigation);
         destinationDropdown.onValueChanged.AddListener(OnDestinationSelected);
 
-        HideFeedbackAlert(); 
+        HideFeedbackAlert();
     }
 
     void PopulateDropdown()
@@ -35,7 +35,7 @@ public class UIManager : MonoBehaviour
         {
             destinationDropdown.options.Add(new TMP_Dropdown.OptionData(kp.gameObject.name));
         }
-        destinationDropdown.RefreshShownValue(); 
+        destinationDropdown.RefreshShownValue();
     }
 
     public void OnDestinationSelected(int index)
@@ -65,7 +65,8 @@ public class UIManager : MonoBehaviour
             feedbackText.text = "Navigating to: " + selectedKeyPoint.gameObject.name;
         }
 
-        startButton.gameObject.SetActive(false); 
+        arrowController.StartNavigation(selectedKeyPoint.transform.position);  // Activate arrow for navigation
+        startButton.gameObject.SetActive(false);
         HideFeedbackAlert();
     }
 

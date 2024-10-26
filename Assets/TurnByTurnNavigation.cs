@@ -35,10 +35,18 @@ public class TurnByTurnNavigation : MonoBehaviour
         Debug.Log("Destination reached!");
     }
 
-    private void UpdateArrowPosition(Vector3 targetPosition)
+   private void UpdateArrowPosition(Vector3 targetPosition)
+{
+    Vector3 direction = (targetPosition - userPosition.position).normalized;
+    float offsetDistance = Vector3.Distance(userPosition.position, targetPosition) * 0.1f; 
+    Vector3 arrowPosition = userPosition.position + direction * offsetDistance;
+    RaycastHit hit;
+    if (Physics.Raycast(userPosition.position, direction, out hit, offsetDistance * 2))
     {
-        Vector3 direction = (targetPosition - userPosition.position).normalized;
-        arrowInstance.transform.position = userPosition.position + direction * 0.5f; // Set position slightly ahead
-        arrowInstance.transform.rotation = Quaternion.LookRotation(direction); // Orient toward target
+        arrowPosition = hit.point;
     }
+
+    arrowInstance.transform.position = arrowPosition;
+    arrowInstance.transform.rotation = Quaternion.LookRotation(direction);
+}
 }
