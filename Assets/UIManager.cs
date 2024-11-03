@@ -60,7 +60,7 @@ public class UIManager : MonoBehaviour
         if (index >= 0 && index < keyPoints.Length)
         {
             KeyPoint selectedKeyPoint = keyPoints[index];
-            ShowFeedbackAlert("Navigate to: " + selectedKeyPoint.gameObject.name + "?");
+            ShowFeedbackAlert("Start Navigation to: " + selectedKeyPoint.gameObject.name + "?");
         }
     }
 
