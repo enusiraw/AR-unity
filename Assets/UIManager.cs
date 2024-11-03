@@ -4,13 +4,30 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance { get; private set; }
+
     public TMP_Dropdown destinationDropdown;
     public Button startButton;
     public TMP_Text feedbackText;
     public GameObject feedbackPanel;
     public NavigationSystem navigationSystem;
     private KeyPoint[] keyPoints;
-    public ArrowController arrowController;  // Reference to the ArrowController
+    public ArrowController arrowController; 
+    
+    // Add this field to display the current floor
+    public TMP_Text floorIndicatorText;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -65,7 +82,7 @@ public class UIManager : MonoBehaviour
             feedbackText.text = "Navigating to: " + selectedKeyPoint.gameObject.name;
         }
 
-        arrowController.StartNavigation(selectedKeyPoint.transform.position);  // Activate arrow for navigation
+        arrowController.StartNavigation(selectedKeyPoint.transform.position); 
         startButton.gameObject.SetActive(false);
         HideFeedbackAlert();
     }
@@ -89,5 +106,14 @@ public class UIManager : MonoBehaviour
         }
         feedbackText.gameObject.SetActive(false);
         startButton.gameObject.SetActive(false);
+    }
+
+    public void ShowFloorIndicator(int floor)
+    {
+        if (floorIndicatorText != null)
+        {
+            floorIndicatorText.text = "Floor: " + floor;
+            floorIndicatorText.gameObject.SetActive(true);
+        }
     }
 }

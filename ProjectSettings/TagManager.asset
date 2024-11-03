@@ -36,9 +36,12 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - XR Simulation
   - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: 10
+    uniqueID: 2630842493
     locked: 0

@@ -1,27 +1,27 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class KeyPoint : MonoBehaviour
 {
-    public string pointID;
-    public string pointDescription;
-    public List<KeyPoint> connectedPoints = new List<KeyPoint>();
+    public KeyPoint[] connectedPoints;
 
     void Start()
     {
-        Debug.Log("Key Point: " + pointID + " is at position: " + transform.position);
-
-        foreach (var connectedPoint in connectedPoints)
-        {
-            Debug.Log("Connected to: " + connectedPoint.pointID);
-        }
+        FindAndConnectAllKeyPoints();
     }
-    public void AddConnection(KeyPoint keyPoint)
+
+    private void FindAndConnectAllKeyPoints()
     {
-        if (!connectedPoints.Contains(keyPoint))
+        KeyPoint[] allKeyPoints = FindObjectsOfType<KeyPoint>();
+        connectedPoints = new KeyPoint[allKeyPoints.Length - 1];
+
+        int index = 0;
+        foreach (var keyPoint in allKeyPoints)
         {
-            connectedPoints.Add(keyPoint);
-            Debug.Log($"{pointID} now connected to {keyPoint.pointID}");
+            if (keyPoint != this)
+            {
+                connectedPoints[index] = keyPoint;
+                index++;
+            }
         }
     }
 }

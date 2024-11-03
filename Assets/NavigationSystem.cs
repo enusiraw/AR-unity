@@ -36,38 +36,26 @@ public class NavigationSystem : MonoBehaviour
         StartCoroutine(turnByTurnNavigation.NavigatePath(path));
     }
 
-    List<KeyPoint> FindPath(KeyPoint start, KeyPoint goal)
+   List<KeyPoint> FindPath(KeyPoint start, KeyPoint goal)
+{
+    List<KeyPoint> path = new List<KeyPoint> { start, goal };
+    return path;
+}
+
+    KeyPoint GetLowestFScoreNode(List<KeyPoint> openSet, Dictionary<KeyPoint, float> fScore)
     {
-        var openSet = new SortedList<float, KeyPoint>();
-        var cameFrom = new Dictionary<KeyPoint, KeyPoint>();
-        var gScore = new Dictionary<KeyPoint, float>();
-        var fScore = new Dictionary<KeyPoint, float>();
-
-        gScore[start] = 0;
-        fScore[start] = Heuristic(start, goal);
-        openSet.Add(fScore[start], start);
-
-        while (openSet.Count > 0)
+        KeyPoint lowest = openSet[0];
+        foreach (var node in openSet)
         {
-            KeyPoint current = openSet.Values[0];
-            if (current == goal) return ReconstructPath(cameFrom, current);
-
-            openSet.RemoveAt(0);
-            foreach (KeyPoint neighbor in current.connectedPoints)
+            if (fScore.ContainsKey(node) && fScore[node] < fScore[lowest])
             {
-                float tentativeGScore = gScore[current] + Vector3.Distance(current.transform.position, neighbor.transform.position);
-                if (!gScore.ContainsKey(neighbor) || tentativeGScore < gScore[neighbor])
-                {
-                    cameFrom[neighbor] = current;
-                    gScore[neighbor] = tentativeGScore;
-                    fScore[neighbor] = gScore[neighbor] + Heuristic(neighbor, goal);
-                    if (!openSet.ContainsValue(neighbor)) openSet.Add(fScore[neighbor], neighbor);
-                }
+                lowest = node;
             }
         }
-        return null;
+        return lowest;
     }
 
+    // Heuristic and ReconstructPath functions remain the same
     float Heuristic(KeyPoint a, KeyPoint b)
     {
         return Vector3.Distance(a.transform.position, b.transform.position);
@@ -84,21 +72,30 @@ public class NavigationSystem : MonoBehaviour
         return path;
     }
 
-    KeyPoint GetCurrentKeyPoint()
+   KeyPoint GetCurrentKeyPoint()
+{
+    KeyPoint nearestKeyPoint = null;
+    float closestDistance = Mathf.Infinity;
+
+    foreach (KeyPoint keyPoint in keyPoints)
     {
-        KeyPoint nearestKeyPoint = null;
-        float closestDistance = Mathf.Infinity;
-
-        foreach (KeyPoint keyPoint in keyPoints)
+        float distanceToUser = Vector3.Distance(userPosition.position, keyPoint.transform.position);
+        if (distanceToUser < closestDistance)
         {
-            float distanceToUser = Vector3.Distance(userPosition.position, keyPoint.transform.position);
-            if (distanceToUser < closestDistance)
-            {
-                closestDistance = distanceToUser;
-                nearestKeyPoint = keyPoint;
-            }
+            closestDistance = distanceToUser;
+            nearestKeyPoint = keyPoint;
         }
-
-        return nearestKeyPoint;
     }
+
+    if (nearestKeyPoint == null)
+    {
+        Debug.LogError("Failed to find the nearest key point to the user's position.");
+    }
+    else
+    {
+       // Debug.Log($"Current Key Point: {nearestKeyPoint.pointID} on floor {nearestKeyPoint.floor}");
+    }
+    return nearestKeyPoint;
+}
+
 }
